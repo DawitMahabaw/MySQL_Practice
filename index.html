@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Add Product</title>
+  </head>
+
+  <body>
+    <h1>Add iPhone Product</h1>
+    <!-- name="product_name" This name must match your backend.
+      Because later: req.body.product_name
+      will look for: name="product_name"
+They must match. -->
+
+    <form action="/add-product" method="POST">
+      <label> Product Name: </label>
+
+      <input type="text" name="product_name" />
+
+      <br /><br />
+
+      <label> Product URL: </label>
+
+      <input type="text" name="product_url" />
+
+      <br /><br />
+
+      <button type="submit">Add Product</button>
+    </form>
+  </body>
+</html>
