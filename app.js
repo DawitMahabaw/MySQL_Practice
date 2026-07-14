@@ -424,7 +424,7 @@ app.get("/install", (req, res) => {
   });
 });
 
-//? the professional way  of keeping the order 
+//? the professional way  of keeping the order
 // try {
 //     await pool.query(productsTable);
 //     await pool.query(productDescriptionTable);
@@ -436,17 +436,49 @@ app.get("/install", (req, res) => {
 //     res.send("Error creating tables");
 // }
 
-
-
 // Start Express Server
 app.listen(3001, () => {
   console.log("Server running on port 3001");
 });
 
-
-//? Question 3: 
+//? Question 3:
 // Create an HTML file called, “index.html” with a form to populate the "products" table you created above.
 // ● The form on the HTML page should send a POST request to a URL named "/add-product"
 // ● Use Express to receive the POST request
 // ● Use the body-parser module to parse the POST request sent to your Express server
 // ● Write a SQL query to insert the data received from the HTML form into the "products" table
+
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+// Enable middlewares
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Creating thr post route
+
+app.post("/add-product", (req, res) => {
+  // Get data sent from HTML form
+
+  const productName = req.body.product_name;
+  const productUrl = req.body.product_url;
+
+  const sql = `
+    INSERT INTO products(product_name, product_url)
+    VALUES (?,?)
+    `;
+
+  // Execute query
+  connectionPool.query(sql, [productName, productUrl], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send("Error inserting product");
+      return;
+    }
+
+    console.log("Product inserted successfully");
+    res.send("Product added successfully");
+  });
+});
+
+
